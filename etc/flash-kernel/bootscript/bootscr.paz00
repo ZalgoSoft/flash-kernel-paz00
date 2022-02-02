@@ -1,0 +1,53 @@
+echo === Toshiba AC100 MMC autoboot ===
+@@UBOOT_ENV_EXTRA@@
+
+#NB:Needs newline after UBOOT_ENV_EXTRA macro
+## some failsafe checks
+if test "${devtype}" = ""
+then
+  setenv devtype mmc
+else
+  echo devtype "${devtype}"
+fi
+if test "${devnum}" = ""
+then
+  setenv devnum 0
+else
+  echo devnum "${devnum}"
+fi
+if test "${rootpart}" = ""
+then
+  setenv rootpart 1
+else
+  echo rootpart "${rootpart}"
+fi
+if test "${prefix}" = ""
+then
+  setenv prefix /
+else
+  echo prefix "${prefix}"
+fi
+if test "${vmlinuz}" = ""
+then
+  setenv vmlinuz vmlinuz
+else
+  echo vmlinuz "${vmlinuz}"
+fi
+if test "${initrd}" = ""
+then
+  setenv initrd initrd.img.gzu
+else
+  echo initrd "${initrd}"
+fi
+## some failsafe checks end
+
+setenv bootargs @@LINUX_KERNEL_CMDLINE_DEFAULTS@@ @@LINUX_KERNEL_CMDLINE@@ root=/dev/${systemroot} console=tty1
+setenv initrd_high ''
+setenv fdt_high ''
+load ${devtype} ${devnum}:${rootpart} ${kernel_addr_r} ${prefix}${vmlinuz}
+load ${devtype} ${devnum}:${rootpart} ${ramdisk_addr_r} ${prefix}${initrd}
+load ${devtype} ${devnum}:${rootpart} ${fdt_addr_r} ${prefix}${dtb}
+echo bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}
+echo delay ${delayprerun} ... Press Ctrl-C to interrupt.
+sleep ${delayprerun}
+bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}
