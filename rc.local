@@ -1,0 +1,13 @@
+echo mmc1 > /sys/devices/soc0/gpio-leds/leds/wifi-led/trigger
+#echo 2 >  /sys/devices/soc0/backlight/backlight/backlight/brightness
+echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+echo 40 > /proc/sys/vm/dirty_background_ratio
+echo 10000 > /proc/sys/vm/dirty_writeback_centisecs
+echo 9999999 > /proc/sys/vm/dirty_background_bytes
+echo 90 > /proc/sys/vm/dirty_background_ratio
+echo 30000 > /proc/sys/vm/dirty_expire_centisecs
+echo 300000 > /proc/sys/vm/dirty_writeback_centisecs
+echo 100 >  /proc/sys/vm/swappiness
+TERM=linux setterm --blank 1 --msg on  >/dev/tty1 </dev/tty1
+#cat /etc/default/toshibaAC100.fbimg  > /dev/fb0
+exit 0
