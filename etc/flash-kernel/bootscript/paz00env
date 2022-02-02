@@ -1,0 +1,10 @@
+setenv devtype mmc
+setenv devnum 0
+setenv rootpart 1
+setenv distro_rootpart ${rootpart}
+setenv prefix /
+setenv vmlinuz vmlinuz
+setenv dtb dtb
+setenv initrd initrd.img.gzu
+setenv systemroot mmcblk1p2
+setenv delayprerun 5root
