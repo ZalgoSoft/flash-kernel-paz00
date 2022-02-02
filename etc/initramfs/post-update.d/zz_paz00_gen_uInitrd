@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+echo "\33[1;32mGenerating U-Boot special ramdisk from initrd.img ...\33[m"
+cd /boot/
+if [ ! -f "initrd.img" ]; then
+touch initrd.img-`uname -r`
+ln -sf initrd.img-`uname -r` initrd.img ; fi
+if [ ! -f "vmlinuz" ]; then
+touch vmlinuz-`uname -r`
+ln -sf vmlinuz-`uname -r` vmlinuz ; fi
+if [ ! -f "paz00env" ]; then
+touch vmlinuz-`uname -r`
+ln -sf /etc/flash-kernel/ubootenv.d/paz00env paz00env ; fi
+cp -L initrd.img initrd.img.gen.lz4
+## simple try catch
+{ unlz4 -t initrd.img.gen.lz4 2>&1 >/dev/null ; } || { resultlz=$?
+if [ $resultlz -ne 0 ] ; then
+echo "\33[1;31mFailed. Check unlz4 tool is installed or modify this script to allow decompress initrd.img.\33[m" ;
+exit 1 ; fi }
+unlz4 --rm initrd.img.gen.lz4 initrd.img.gen 2>&1 >/dev/null
+gzip initrd.img.gen
+mkimage -A arm -O linux -T ramdisk -C gzip -n ramdisk -d initrd.img.gen.gz initrd.img.gzu
+rm initrd.img.gen.gz
+date
+ls -la /boot/initrd.img.gzu
+echo You may set \$\{initrd\} in paz00env to initrd.img.gzu to allow U-Boot recognize initrd.img.
+echo No any other actions needed, vmlinuz and dtb as tegra20-paz00.dtb accepted as is by loader.
+echo Done.
+echo "\33[1;32mU-Boot special ramdisk from initrd.img generated.\33[m"
