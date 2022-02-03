@@ -1,0 +1,57 @@
+# Install stock Ubuntu image with netboot
+# get files for netboot debian-installer
+
+http://ports.ubuntu.com/ubuntu-ports/dists/focal/main/installer-armhf/current/legacy-images/generic/netboot/tegra/boot.img-tegra-serial.gz
+http://ports.ubuntu.com/ubuntu-ports/dists/focal/main/installer-armhf/current/legacy-images/generic/netboot/tegra/boot.scr-tegra-dhcp-serial
+http://ports.ubuntu.com/ubuntu-ports/dists/focal/main/installer-armhf/current/legacy-images/generic/netboot/tegra/boot.scr-tegra-disk-serial
+http://ports.ubuntu.com/ubuntu-ports/dists/focal/main/installer-armhf/current/legacy-images/generic/netboot/tegra/initrd.gz
+http://ports.ubuntu.com/ubuntu-ports/dists/focal/main/installer-armhf/current/legacy-images/generic/netboot/tegra/tegra20-paz00.dtb
+http://ports.ubuntu.com/ubuntu-ports/dists/focal/main/installer-armhf/current/legacy-images/generic/netboot/tegra/vmlinuz
+
+
+# gunzip this boot.img-tegra-serial.gz and dd it to microsd
+
+# replace boot.scr on disk with this modified boot.scr
+
+# modify initrd with mkimage to make uInitrd format (instruction in other readme)
+
+# write dd files mmcblk1boot0 and mmcblk1boot1 to internal emmc on PAZ00 with any way you prefer
+# ( remember about echo 0 > force_ro flag in /sys partition )
+
+# insert sdcard, boot laptop to command line u-boot and set environment vars
+# type with your hands:
+
+env default -a
+setenv devtype mmc
+setenv devnum 1
+setenv rootpart 1
+setenv distro_rootpart ${rootpart}
+setenv prefix /
+setenv script boot.scr
+saveenv
+run boot_a_script
+
+# and boot sequence will start
+# boot into installer and follow follow instructions
+# repartition internal emmc as
+
+1. mmcblk1p1 ext2 /boot/
+2. mmcblk1p2 ext4 /
+
+# at almost installation end, while installing bootloader stage installation will break. 
+# Make changes in /target/  all.db to prevent  (modded files for flash kernel included)
+# by default it using abootimg and not to able generate valid fresh initrd.img
+
+# finish installation then reboot.
+
+# this time modify u-boot envs to able boot from internal mmc, set:
+
+setenv devnum 1
+setenv rootpart 1
+setenv distro_rootpart ${rootpart}
+setenv prefix /
+saveenv
+boot
+
+# do boot command
+# thats all
