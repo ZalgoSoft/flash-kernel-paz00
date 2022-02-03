@@ -1,0 +1,10 @@
+deb http://archive.canonical.com/ubuntu focal partner
+deb http://ru.ports.ubuntu.com/ubuntu-ports/ focal-backports main restricted universe multiverse
+deb http://ru.ports.ubuntu.com/ubuntu-ports/ focal main restricted universe multiverse
+deb http://ru.ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse
+deb http://ru.ports.ubuntu.com/ubuntu-ports/ focal-updates main restricted universe multiverse
+#deb-src http://ru.ports.ubuntu.com/ubuntu-ports/ focal-backports main restricted universe multiverse
+#deb-src http://ru.ports.ubuntu.com/ubuntu-ports/ focal main restricted universe multiverse
+#deb-src http://ru.ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse
+#deb-src http://ru.ports.ubuntu.com/ubuntu-ports/ focal-updates main restricted universe multiverse
+

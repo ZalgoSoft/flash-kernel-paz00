@@ -1,70 +1,75 @@
-ccm
-rtc_tps6586x
-rtc_tegra
-tps6586x_regulator
+# List of modules that you want to include in your initramfs.
+# They will be loaded at boot time in the order below.
+#
+# Syntax:  module_name [args ...]
+#
+# You must run update-initramfs(8) to effect this change.
+#
+# Examples:
+#
+# raid1
+# sd_mod
 
-nvec
-nvec_kbd
-nvec_paz00
-nvec_power
-nvec_ps2
+#best choice is not to force to choose modules,
+#wrong listing will break your boot
+#this list is for reference
+#this is all modules loading during boot by kernel 5.4.0
 
-sysimgblt
-sysfillrect
-syscopyarea
-fb_sys_fops
-drm
-drm_kms_helper
-iova
-tegra-vde
-host1x
-tegra-drm
-pwm_bl
-pwm_tegra
-panel-simple
-
-uio
-uio_pdrv_genirq
-
-i2c_tegra
-serio_raw
-gpio_keys
-leds_gpio
-input_leds
-
-snd_soc_tegra_pcm
-snd_soc_tegra_utils
-snd_soc_tegra20_i2s
-snd_soc_tegra20_das
-snd_soc_alc5632
-snd_soc_tegra_alc5632
-
-phy-tegra-usb
-ehci_tegra
-sdhci_tegra
-
-ulpi
-ci_hdrc
-ci_hdrc_tegra
-
-libarc4
-cfg80211
-mac80211
-rt2x00lib
-rt2800lib
-rt2x00usb
-rt2800usb
-
-ecc
-ecdh_generic
-bluetooth
-btintel
-btbcm
-bnep
-btrtl
-btusb
-
-
-lm90
-
-videodev
+#ccm
+#rtc_tps6586x
+#rtc_tegra
+#tps6586x_regulator
+#nvec
+#nvec_kbd
+#nvec_paz00
+#nvec_power
+#nvec_ps2
+#sysimgblt
+#sysfillrect
+#syscopyarea
+#fb_sys_fops
+#drm
+#drm_kms_helper
+#iova
+#tegra-vde
+#host1x
+#tegra-drm
+#pwm_bl
+#pwm_tegra
+#panel-simple
+#uio
+#uio_pdrv_genirq
+#i2c_tegra
+#serio_raw
+#gpio_keys
+#leds_gpio
+#input_leds
+#snd_soc_tegra_pcm
+#snd_soc_tegra_utils
+#snd_soc_tegra20_i2s
+#snd_soc_tegra20_das
+#snd_soc_alc5632
+#snd_soc_tegra_alc5632
+#phy-tegra-usb
+#ehci_tegra
+#sdhci_tegra
+#ulpi
+#ci_hdrc
+#ci_hdrc_tegra
+#libarc4
+#cfg80211
+#mac80211
+#rt2x00lib
+#rt2800lib
+#rt2x00usb
+#rt2800usb
+#ecc
+#ecdh_generic
+#bluetooth
+#btintel
+#btbcm
+#bnep
+#btrtl
+#btusb
+#lm90
+#videodev

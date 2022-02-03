@@ -1,0 +1,8 @@
+# its advisable to change default record in flash-kernel pakage due to floating behaviour
+# originally its requires abootimg and try to write kernel to one of mmcblk0bootX
+# anyway it should works even without these changes
+
+Machine: Toshiba AC100 / Dynabook AZ
+Bootloader-sets-root: yes
+
+

@@ -1,0 +1,11 @@
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  wifis:
+    wlan0:
+      dhcp4: yes
+      access-points:
+        mysuperwifi:
+          password: weakstring

@@ -1,0 +1,7 @@
+# cheap way to refresh poisoned arp cache, have 
+# there was a problem to unable reconnect after reboot to known hosts, while inet connection works
+# no clue why hosts lost neighbourhood after reboot
+# add this string to crontab -e
+
+*/5 * * * for i in `echo carter.lan chip.lan crang.lan dale.lan donatello.lan leonardo.lan michelangelo.lan nimnul.lan raphael.lan shredder.lan splinter.lan bebop.lan` ; do ping $i -c 4 ; done
+

@@ -1,2 +1,2 @@
-LINUX_KERNEL_CMDLINE="cgroup_enable=memory cgroup_memory=1 console=ttyS0,115200n8"
+LINUX_KERNEL_CMDLINE="cgroup_enable=memory cgroup_memory=1"
 LINUX_KERNEL_CMDLINE_DEFAULTS=""

@@ -1,0 +1,5 @@
+#remove crap handlers from which overload initrd with useless stuff
+#/usr/share/initramfs-tools/hooks
+
+#modify some stuff here for early boot
+#/usr/share/initramfs-tools/scripts

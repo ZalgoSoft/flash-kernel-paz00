@@ -41,7 +41,7 @@ else
 fi
 ## some failsafe checks end
 
-setenv bootargs @@LINUX_KERNEL_CMDLINE_DEFAULTS@@ @@LINUX_KERNEL_CMDLINE@@ root=/dev/${systemroot} console=tty1
+setenv bootargs @@LINUX_KERNEL_CMDLINE_DEFAULTS@@ @@LINUX_KERNEL_CMDLINE@@ root=/dev/${systemroot} console=ttyS0,115200n8 console=tty1
 setenv initrd_high ''
 setenv fdt_high ''
 load ${devtype} ${devnum}:${rootpart} ${kernel_addr_r} ${prefix}${vmlinuz}

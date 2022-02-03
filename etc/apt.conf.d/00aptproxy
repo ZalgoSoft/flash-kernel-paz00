@@ -1,0 +1,3 @@
+# set local proxy apt-cacher-ng for packages
+#Acquire::http::Proxy "http://192.168.1.61:3142";
+

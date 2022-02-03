@@ -1,0 +1,35 @@
+# must prepare initrd for boot with u-boot
+# stock initrd is packed with lz4, but u-boot is not supports is, lets compress with compartible format
+
+# get uncompressed cpio file
+unlz4 --rm initrd.img-5.4.0-96-generic initrd.img-5.4.0-96-generic.decompressed
+
+# now compress it with gzip and get
+gzip initrd.img-5.4.0-96-generic.decompressed
+
+# lets assume your result is initrd.img-5.4.0-96-generic.gz
+# now prepare, convert gziped initrd to uInitrd with mkimage tool
+mkimage -A arm -O linux -T ramdisk -C gzip -n ramdisk -d initrd.img-5.4.0-96-generic.gz initrd.img-5.4.0-96-generic.img.gzu
+
+#there is rumble with default image naming, (uImage, UInitrd, etc ) so we decide give its own extension to uInitrd image
+#so, you got now initrd.img-5.4.0-96-generic.img.gzu and now you set variable ${initrd} to this name.
+
+
+# image contains U-Boot SPL 2016.11-g4f44432871 (Jan 26 2022 - 21:30:26)
+# boot works with these parameters:
+
+setenv initrd_high ''
+setenv fdt_high ''
+
+# vmlinuz accepred with no changes
+load ${devtype} ${devnum}:${rootpart} ${kernel_addr_r} ${prefix}${vmlinuz}
+
+# initrd must be prepared with mkimage for u-boot
+load ${devtype} ${devnum}:${rootpart} ${ramdisk_addr_r} ${prefix}${initrd}
+
+# stock dtb no changes
+load ${devtype} ${devnum}:${rootpart} ${fdt_addr_r} ${prefix}${dtb}
+
+# special command for boot in u-boot prepared images
+bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}
+
