@@ -1,0 +1,85 @@
+https://en.opensuse.org/HCL:ToshibaAC100
+
+cat << EOF > ./u-boot.cfg
+Version       = 0x00020001;
+Bctcopy       = 1;
+Bctfile       = gbct.bct;
+BootLoader    = u-boot.bin,0x00108000,0x00108000,Complete;
+EOF
+
+
+
+Extract u-boot.bin armv7l binary from openSUSE RPM 
+#wget https://rpmfind.net/linux/opensuse/ports/armv7hl/tumbleweed/repo/oss/armv7hl/u-boot-paz00-2022.01-2.1.armv7hl.rpm
+take u-boot.bin
+
+Extract current BCT 
+#dd if=/dev/mmcblkXboot0 of=current.bct bs=4080 count=1
+
+dump current config
+#bct_dump current.bct > current.bct.txt
+
+change current.bct.txt - add  this line after odmdata
+BootLoader    = u-boot.bin,0x00108000,0x00108000,Complete;
+
+generate empty bct
+#cbootimage -gbct -o 0x800c0075 current.bct.txt gbct.bct
+New BCT file ./gbct.bct has been successfully generated!
+
+
+
+add 1-st record our loader, one of 4 possible
+#cbootimage -d  u-boot.cfg  ./u-boot.bct
+
+bct size: 4080
+**update_bl()
+begin_update(): bct data: b=14 p=9
+writing bootloader
+  redundancy = 1
+  BL[0]: 131073 0001 0000 623900 0x00108000 0x00108000
+1710e52f6a48abb384ae1ae2c7f9deea
+**BL[1]: 0 0000 0000 0000 0x00000000 0x00000000
+00000000000000000000000000000000
+**BL[2]: 0 0000 0000 0000 0x00000000 0x00000000
+00000000000000000000000000000000
+**BL[3]: 0 0000 0000 0000 0x00000000 0x00000000
+00000000000000000000000000000000
+Image file ./u-boot.bct has been successfully generated!
+
+
+
+
+ bct_dump u-boot.bct |head -n27
+ make sure
+ Version       = 0x00020001;
+BlockSize     = 0x00004000;
+PageSize      = 0x00000200;
+PartitionSize = 0x01000000;
+OdmData       = 0x800c0075;
+# Bootloader used       = 1;
+# Bootloaders max       = 4;
+# BCT size              = 4080;
+# Hash size             = 16;
+# Crypto offset         = 16;
+# Crypto length         = 4064;
+# Max BCT search blocks = 64;
+#
+# These values are set by cbootimage using the
+# bootloader provided by the Bootloader=...
+# configuration option.
+#
+# Bootloader[0].Version      = 0x00020001;
+# Bootloader[0].Start block  = 1;
+# Bootloader[0].Start page   = 0;
+# Bootloader[0].Length       = 623900;
+# Bootloader[0].Load address = 0x00108000;
+# Bootloader[0].Entry point  = 0x00108000;
+# Bootloader[0].Attributes   = 0x00000000;
+# Bootloader[0].Bl AES Hash  = 2fe51017b3ab486ae21aae84eadef9c7;
+# Bootloader[0].RsaPssSigBl:
+
+
+
+dont know about
+# Bootloader[0].Start block  = 1;
+in stock bct value is 224 , what means shift from begin of bct
