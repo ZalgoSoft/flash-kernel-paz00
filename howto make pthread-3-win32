@@ -6,6 +6,16 @@ nmake all install /K
 nmake realclean VC 
 nmake realclean VCE
 
+;setenv /x64 /2003 /Release
+nmake realclean VC
+nmake realclean VCE
+nmake realclean VSE
+nmake realclean VC-static
+nmake realclean VCE-static
+nmake realclean VSE-static
+
+
+fre timer try get .lib
 
                 cl /errorReport:none /nologo /MD /EHs /TP /I. /DHAVE_CONFIG_H /W3 /O2 /Ob2  /D__PTW32_BUILD_INLINED /D__PTW32_CLEANUP_CXX -c pthread.c
 pthread.c
