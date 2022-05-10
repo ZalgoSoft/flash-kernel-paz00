@@ -47,6 +47,9 @@ show caca on terminal
 
 ffmpeg -video_size 160x120 -r 10 -i /dev/video0 -input_format yuyv422 -pix_fmt rgb24 -f caca -window_size 128x42 -color full16 - > /dev/tty1
 
+play youtube stream with audio to terminal 
+ffmpeg -threads 4 -i $(youtube-dl -f 91 -g https://www.youtube.com/watch?v=aaaffffrrr) -c:a pcm_s16le -f alsa -ac 1 -ar 16000 default -f caca -filter:v fps=5 -video_size 256x144 -pix_fmt rgb24 -window_size 128x42 -color full16 - > /dev/tty1
+
 cd /var/lib/motion
 for i in `ls -1tr *.mpg|head -n -1` ; do ffmpeg -i $i -c:v libx264 -preset veryslow -y ./lapse/$i && rm -f $i; done
 for i in `ls -1tr *.mkv|head -n -1` ; do ffmpeg -i $i -c:v libx264 -preset veryslow -y ./events/$i && rm -f $i; done
