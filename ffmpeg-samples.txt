@@ -43,6 +43,10 @@ Output #0, mpegts, to 'pipe:1':
       cpb: bitrate max/min/avg: 1000000/0/950000 buffer size: 1000000 vbv_delay: -1      
 ===============
 
+show caca on terminal
+
+ffmpeg -video_size 160x120 -r 10 -i /dev/video0 -input_format yuyv422 -pix_fmt rgb24 -f caca -window_size 128x42 -color full16 - > /dev/tty1
+
 cd /var/lib/motion
 for i in `ls -1tr *.mpg|head -n -1` ; do ffmpeg -i $i -c:v libx264 -preset veryslow -y ./lapse/$i && rm -f $i; done
 for i in `ls -1tr *.mkv|head -n -1` ; do ffmpeg -i $i -c:v libx264 -preset veryslow -y ./events/$i && rm -f $i; done
