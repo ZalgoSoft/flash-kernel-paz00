@@ -1,0 +1,43 @@
+this is a draft for future auto build and install OS
+
+
+   debirf - build an initrd to boot a full Debian system entirely from RAM
+   
+   https://github.com/Halium/initrd-builder/blob/master/build-initrd.sh   
+   https://wiki.debian.org/DebianInstaller/Preseed   
+   https://live-team.pages.debian.net/live-manual/html/live-manual/the-basics.en.html#162   
+   https://wiki.debian.org/DebianInstaller   
+   https://wiki.debian.org/ru/Debootstrap   
+   https://wiki.debian.org/EmDebian/CrossDebootstrap   
+   https://wiki.debian.org/Debootstrap   
+   https://www.debian.org/releases/stretch/amd64/apds03.html.en   
+   https://habr.com/ru/post/147522/   
+   http://us.archive.ubuntu.com/ubuntu/dists/   
+   http://ports.ubuntu.com/dists/focal-backports/   
+   http://archive.ubuntu.com/ubuntu/   
+   http://ports.ubuntu.com/dists/focal/main/installer-armhf/   
+   http://us.archive.ubuntu.com/ubuntu/dists/        
+   
+   fallocate -l 2048M ./disk.raw
+   fdisk ./disk.raw
+   sudo losetup -f -P ./disk.raw
+   sudo mkfs.ext4 /dev/loop3p1
+   mkdir chroot
+   sudo mount /dev/loop3p1 ./chroot/
+
+   sudo debootstrap --arch=amd64 --variant=minbase --include=net-tools,linux-image-generic,initramfs-tools,grub-pc  focal chroot http://us.archive.ubuntu.com/ubuntu
+
+   sudo mount proc chroot/proc -t proc
+   sudo mount sysfs chroot/sys -t sysfs
+   sudo mount -obind /dev ./chroot/dev
+   #apt-get install initramfs-tools grub-pc
+   sudo chroot chroot /bin/bash
+   update-initramfs -k all -c
+   grub-install /dev/loop3
+   update-grub
+   logout
+   sudo umount ./chroot/dev
+   sudo umount ./chroot/proc
+   sudo umount ./chroot/sys
+   sudo umount ./chroot
+   sudo losetup -D /dev/loop3
