@@ -35,6 +35,7 @@ this is a draft for future auto build and install OS
    update-initramfs -k all -c
    grub-install /dev/loop3
    update-grub
+   echo "/dev/sda1 / ext4 defaults 0 0" >> /etc/fstab
    logout
    sudo umount ./chroot/dev
    sudo umount ./chroot/proc
