@@ -25,7 +25,7 @@ this is a draft for future auto build and install OS
    mkdir chroot
    sudo mount /dev/loop3p1 ./chroot/
 
-   sudo debootstrap --arch=amd64 --variant=minbase --include=net-tools,linux-image-generic,initramfs-tools,grub-pc,systemd,systemd-sysv --cache-dir=/home/ubuntu/debo/cache focal chroot http://us.archive.ubuntu.com/ubuntu
+   sudo debootstrap --arch=amd64 --variant=minbase --include=net-tools,linux-image-generic,initramfs-tools,grub-pc,systemd,systemd-sysv,ubuntu-minimal --cache-dir=/home/ubuntu/debo/cache focal chroot http://us.archive.ubuntu.com/ubuntu
 
    sudo mount proc chroot/proc -t proc
    sudo mount sysfs chroot/sys -t sysfs
